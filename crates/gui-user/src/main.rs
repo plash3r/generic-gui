@@ -12,9 +12,7 @@ use core::{
     ptr,
     sync::atomic::{AtomicUsize, Ordering},
 };
-use generic_gui_core::{
-    Color, Desktop, InputEvent, Key, MouseButton, Rect, Renderer, TextStyle,
-};
+use generic_gui_core::{Color, Desktop, InputEvent, Key, MouseButton, Rect, Renderer, TextStyle};
 
 const MAX_WIDTH: usize = 1280;
 const MAX_HEIGHT: usize = 1024;
@@ -99,9 +97,7 @@ impl FramebufferRenderer {
     }
 
     fn packed(color: Color) -> u32 {
-        ((color.red() as u32) << 16)
-            | ((color.green() as u32) << 8)
-            | color.blue() as u32
+        ((color.red() as u32) << 16) | ((color.green() as u32) << 8) | color.blue() as u32
     }
 
     fn put_pixel(&mut self, x: i32, y: i32, color: Color) {
@@ -133,10 +129,7 @@ impl FramebufferRenderer {
                 }
                 let pixel_x = x + column * TEXT_SCALE;
                 let pixel_y = y + row as i32 * TEXT_SCALE;
-                self.fill_rect(
-                    Rect::new(pixel_x, pixel_y, TEXT_SCALE, TEXT_SCALE),
-                    color,
-                );
+                self.fill_rect(Rect::new(pixel_x, pixel_y, TEXT_SCALE, TEXT_SCALE), color);
             }
         }
     }

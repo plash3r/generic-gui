@@ -88,12 +88,7 @@ pub fn poll_input() -> Option<InputPacket> {
 }
 
 pub fn write_stdout(message: &str) {
-    let _ = syscall3(
-        SYS_WRITE,
-        1,
-        message.as_ptr() as u64,
-        message.len() as u64,
-    );
+    let _ = syscall3(SYS_WRITE, 1, message.as_ptr() as u64, message.len() as u64);
 }
 
 pub fn exit(code: u64) -> ! {

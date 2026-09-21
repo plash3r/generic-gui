@@ -154,12 +154,7 @@ impl Desktop {
         renderer.fill_rect(Rect::new(0, 0, self.width, TOP_BAR_HEIGHT), TOP_BAR);
         renderer.text(12, 7, "Generic", TEXT, TextStyle::Bold);
         renderer.fill_rect(
-            Rect::new(
-                0,
-                self.height - TASKBAR_HEIGHT,
-                self.width,
-                TASKBAR_HEIGHT,
-            ),
+            Rect::new(0, self.height - TASKBAR_HEIGHT, self.width, TASKBAR_HEIGHT),
             TASKBAR,
         );
 
@@ -200,13 +195,7 @@ impl Desktop {
 
         let minimize = self.minimize_button(window.rect);
         renderer.fill_rect(minimize, BUTTON);
-        renderer.text(
-            minimize.x + 7,
-            minimize.y + 2,
-            "-",
-            TEXT,
-            TextStyle::Bold,
-        );
+        renderer.text(minimize.x + 7, minimize.y + 2, "-", TEXT, TextStyle::Bold);
 
         let close = self.close_button(window.rect);
         renderer.fill_rect(close, CLOSE);
@@ -261,18 +250,13 @@ impl Desktop {
             return;
         }
 
-        let hit = self
-            .z_order
-            .iter()
-            .rev()
-            .copied()
-            .find(|id| {
-                self.window(*id)
-                    .map(|window| {
-                        !window.closed && !window.minimized && window.rect.contains(self.cursor)
-                    })
-                    .unwrap_or(false)
-            });
+        let hit = self.z_order.iter().rev().copied().find(|id| {
+            self.window(*id)
+                .map(|window| {
+                    !window.closed && !window.minimized && window.rect.contains(self.cursor)
+                })
+                .unwrap_or(false)
+        });
 
         let Some(id) = hit else {
             self.focused = None;
@@ -401,7 +385,9 @@ impl Desktop {
 
     fn clamp_window(&self, mut rect: Rect) -> Rect {
         rect.width = rect.width.clamp(120, self.width.max(120));
-        rect.height = rect.height.clamp(TITLE_HEIGHT + 40, self.height.max(TITLE_HEIGHT + 40));
+        rect.height = rect
+            .height
+            .clamp(TITLE_HEIGHT + 40, self.height.max(TITLE_HEIGHT + 40));
 
         let min_x = -rect.width + WINDOW_MIN_VISIBLE;
         let max_x = self.width - WINDOW_MIN_VISIBLE;
@@ -468,14 +454,7 @@ mod tests {
             self.operations += 1;
         }
 
-        fn text(
-            &mut self,
-            _x: i32,
-            _y: i32,
-            _text: &str,
-            _color: Color,
-            _style: TextStyle,
-        ) {
+        fn text(&mut self, _x: i32, _y: i32, _text: &str, _color: Color, _style: TextStyle) {
             self.operations += 1;
         }
     }

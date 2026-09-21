@@ -84,8 +84,11 @@ struct FramebufferRenderer {
 
 impl FramebufferRenderer {
     fn new(width: usize, height: usize) -> Self {
+        // SAFETY: Generic GUI owns this single static backbuffer for the
+        // lifetime of the one userspace display-server process.
+        let pixels = unsafe { core::ptr::addr_of_mut!(PIXELS.0) as *mut u32 };
         Self {
-            pixels: core::ptr::addr_of_mut!(PIXELS.0) as *mut u32,
+            pixels,
             width: width as i32,
             height: height as i32,
         }

@@ -16,3 +16,8 @@ jobs:
         run: |
           cargo fmt --all -- --check
           cargo test --workspace
+      - name: Freestanding Generic userspace binary
+        run: |
+          cargo build -p generic-gui-user --target x86_64-unknown-none --release
+          readelf -h target/x86_64-unknown-none/release/generic-gui-user
+          readelf -l target/x86_64-unknown-none/release/generic-gui-user

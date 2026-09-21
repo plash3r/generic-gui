@@ -1,0 +1,15 @@
+[package]
+name = "generic-gui-user"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+build = "build.rs"
+
+[dependencies]
+generic-gui-core = { path = "../gui-core" }
+
+[[bin]]
+name = "generic-gui-user"
+path = "src/main.rs"
+test = false
+bench = false

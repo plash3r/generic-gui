@@ -1,4 +1,5 @@
 [toolchain]
-channel = "stable"
+channel = "nightly"
 profile = "minimal"
 components = ["rustfmt"]
+targets = ["x86_64-unknown-none"]
